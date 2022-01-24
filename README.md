@@ -6,7 +6,7 @@
 
 请先确保中转机已经安装 Docker 并且 Docker 运行正常。被控端镜像编译后大概占用 250MB 的存储空间。
 
-**注意事项：** 由于需要在容器内运行 systemd 服务，如果被控机主机上已开启 `cgroup v2` 会造成兼容性问题，需要手动把被控机主机上的 `cgroup v2` 先关闭（判断 `cgroup v2` 是否已开启可以在主机上输入 `docker info | grep Cgroup` ，若命令执行结果显示不为 `Cgroup Driver: cgroupfs; Cgroup Version: 1` 则需要关闭 `cgroup v2` ），可参考以下步骤：
+**注意事项：** 由于需要在容器内运行 systemd 服务，如果被控机主机上已开启 `cgroup v2` 会造成兼容性问题，需要手动把被控机主机上的 `cgroup v2` 先关闭（判断 `cgroup v2` 是否已开启可以在主机上输入 `docker info | grep Cgroup` ，若命令执行结果显示**不为** `Cgroup Driver: cgroupfs; Cgroup Version: 1` 则需要关闭 `cgroup v2` ），可参考以下步骤：
 
 1. 修改 `/etc/default/grub` 文件，添加参数 `GRUB_CMDLINE_LINUX="systemd.unified_cgroup_hierarchy=0"`（如果原本已有 `GRUB_CMDLINE_LINUX` 配置，请将 `systemd.unified_cgroup_hierarchy=0` 添加到原有配置最后）
 2. 更新被控主机 `grub` ：`sudo update-grub`
