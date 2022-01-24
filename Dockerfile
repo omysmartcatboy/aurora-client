@@ -14,7 +14,7 @@ RUN yum makecache -y && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     sed -i "s/#Port 22/Port $SSH_PORT/" /etc/ssh/sshd_config && \
-    systemctl enable --now sshd && \
     echo "$PASSWD" | passwd root --stdin
 
-CMD ["bash"]
+EXPOSE $SSH_PORT
+CMD ["/usr/sbin/sshd", "-D", "-o", "ListenAddress=0.0.0.0"]
