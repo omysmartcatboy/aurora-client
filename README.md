@@ -9,7 +9,7 @@
 ```shell
 # 1. 在中转机下载本仓库
 git clone https://github.com/smartcatboy/aurora-client.git
-# 2. 编译被控端 Docker 镜像
+# 2. 编译被控端 Docker 镜像（ SSH_PORT 为连接端口，PASSWD 为 root 对应的密码）
 cd aurora-client
 sudo docker build -f Dockerfile -t aurora-client --build-arg SSH_PORT=62222 --build-arg PASSWD=AuroraAdminPanel321 .
 # 3. 启动被控端特权容器，设置网络模式为 host ，并设置为开机自启动
