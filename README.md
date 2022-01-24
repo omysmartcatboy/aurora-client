@@ -17,6 +17,7 @@
 被控端容器默认用户名 root ，密码 AuroraAdminPanel321 （**！请务必手动修改容器默认密码！**），SSH 端口号 62222，连接 ip 同部署在的中转机的 ip 。
 
 ```shell
+sudo docker pull smartcatboy/aurora-client:latest && \
 sudo docker run -d --privileged --name aurora-client --network=host --restart=always -v /lib/modules:/lib/modules smartcatboy/aurora-client:latest
 ```
 
