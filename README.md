@@ -4,12 +4,24 @@
 
 # 使用教程
 
-请先确保中转机已经安装 Docker 并且 Docker 运行正常。**由于镜像编译过程中会拉取 centos 官方的 yum 源，请保证编译的时候中转机器国外网络连接正常。** 被控端镜像编译后大概占用 250MB 的存储空间。
+请先确保中转机已经安装 Docker 并且 Docker 运行正常。被控端镜像编译后大概占用 250MB 的存储空间。
+
+## 方法一：一键部署（简单）
+
+被控端容器默认用户名 root ，密码 AuroraAdminPanel321 （建议手动修改容器默认密码），SSH 端口号 62222，连接 ip 同部署在的中转机的 ip 。
+
+```shell
+sudo docker run -d --privileged --name aurora-client --network=host --restart=always -v /lib/modules:/lib/modules smartcatboy/aurora-client:latest
+```
+
+## 方法二：手动编译被控端容器并部署
+
+该方法在编译被控端镜像时，可以手动指定 SSH 端口号以及 root 用户密码，可以提高安全性。**由于镜像编译过程中会拉取 centos 官方的 yum 源，请保证编译的时候中转机器国外网络连接正常。**
 
 ```shell
 # 1. 在中转机下载本仓库
 git clone https://github.com/smartcatboy/aurora-client.git
-# 2. 编译被控端 Docker 镜像（ SSH_PORT 为连接端口，PASSWD 为 root 对应的密码）
+# 2. 编译被控端 Docker 镜像（ SSH_PORT 为连接端口，注意不要设置成与主机 SSH 端口号一致造成冲突，PASSWD 为 root 对应的密码）
 cd aurora-client
 sudo docker build -f Dockerfile -t aurora-client --build-arg SSH_PORT=62222 --build-arg PASSWD=AuroraAdminPanel321 .
 # 3. 启动被控端特权容器，设置网络模式为 host ，并设置为开机自启动
