@@ -14,6 +14,7 @@ RUN yum makecache -y && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     sed -i "s/#Port 22/Port $SSH_PORT/" /etc/ssh/sshd_config && \
+    ssh-keygen -A && \
     echo "$PASSWD" | passwd root --stdin
 
 EXPOSE $SSH_PORT
