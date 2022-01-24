@@ -6,6 +6,12 @@
 
 请先确保中转机已经安装 Docker 并且 Docker 运行正常。被控端镜像编译后大概占用 250MB 的存储空间。
 
+**注意事项：** 由于需要在容器内运行 systemd 服务，如果被控机主机上已开启 `cgroup v2` 会造成兼容性问题，需要手动把被控机主机上的 `cgroup v2` 先关闭，可参考以下步骤：
+
+1. 修改 `/etc/default/grub` 文件，添加参数 `GRUB_CMDLINE_LINUX="systemd.unified_cgroup_hierarchy=0"`（如果原本已有 `GRUB_CMDLINE_LINUX` 配置，请将 `systemd.unified_cgroup_hierarchy=0` 添加到原有配置最后）
+2. 更新被控主机 `grub` ：`sudo update-grub`
+3. 重启被控主机：`sudo reboot`
+
 ## 方法一：一键部署被控端容器（简单）
 
 被控端容器默认用户名 root ，密码 AuroraAdminPanel321 （**！请务必手动修改容器默认密码！**），SSH 端口号 62222，连接 ip 同部署在的中转机的 ip 。
