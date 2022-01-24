@@ -6,15 +6,15 @@
 
 请先确保中转机已经安装 Docker 并且 Docker 运行正常。被控端镜像编译后大概占用 250MB 的存储空间。
 
-## 方法一：一键部署（简单）
+## 方法一：一键部署被控端容器（简单）
 
-被控端容器默认用户名 root ，密码 AuroraAdminPanel321 （建议手动修改容器默认密码），SSH 端口号 62222，连接 ip 同部署在的中转机的 ip 。
+被控端容器默认用户名 root ，密码 AuroraAdminPanel321 （**！请务必手动修改容器默认密码！**），SSH 端口号 62222，连接 ip 同部署在的中转机的 ip 。
 
 ```shell
 sudo docker run -d --privileged --name aurora-client --network=host --restart=always -v /lib/modules:/lib/modules smartcatboy/aurora-client:latest
 ```
 
-## 方法二：手动编译被控端容器并部署
+## 方法二：手动编译被控端镜像并部署容器
 
 该方法在编译被控端镜像时，可以手动指定 SSH 端口号以及 root 用户密码，可以提高安全性。**由于镜像编译过程中会拉取 centos 官方的 yum 源，请保证编译的时候中转机器国外网络连接正常。**
 
